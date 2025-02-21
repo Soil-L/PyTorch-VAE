@@ -1,8 +1,8 @@
 from .types_ import *
 from torch import nn
 from abc import abstractmethod
-
-class BaseVAE(nn.Module):
+import pytorch_lightning as pl
+class BaseVAE(pl.LightningModule):
     
     def __init__(self) -> None:
         super(BaseVAE, self).__init__()
