@@ -33,6 +33,9 @@ class VAEXperiment(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         real_img, labels = batch
+        vutils.save_image(real_img.data, f"./real_img_{self.logger.name}_Epoch_{self.current_epoch}_Batch_{batch_idx}.png",
+                  normalize=True,
+                  nrow=12)
         self.curr_device = real_img.device
 
         results = self.forward(real_img, labels = labels)

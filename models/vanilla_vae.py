@@ -19,14 +19,15 @@ class VanillaVAE(BaseVAE):
 
         modules = []
         if hidden_dims is None:
-            hidden_dims = [32, 64, 128, 256, 512]
+            # hidden_dims = [32, 64, 128, 256, 512]
+            hidden_dims = [64, 128, 256, 512, 1024]
 
         # Build Encoder
         for h_dim in hidden_dims:
             modules.append(
                 nn.Sequential(
                     nn.Conv2d(in_channels, out_channels=h_dim,
-                              kernel_size= 3, stride= 2, padding  = 1),
+                              kernel_size= 3, stride= 1, padding  = 1),
                     nn.BatchNorm2d(h_dim),
                     nn.LeakyReLU())
             )
@@ -99,7 +100,7 @@ class VanillaVAE(BaseVAE):
         :return: (Tensor) [B x C x H x W]
         """
         result = self.decoder_input(z)
-        result = result.view(-1, 512, 2, 2)
+        result = result.view(-1, 1024, 2, 2)
         result = self.decoder(result)
         result = self.final_layer(result)
         return result
